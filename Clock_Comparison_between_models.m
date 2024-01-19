@@ -18,9 +18,9 @@ clock_Sidx2 = [1,29,6,25]; % {'LHYm'}    {'GIm'}    {'PRR9m'}    {'COP1pnn'}
 
 clock_ylimit_T=[1.5,4,1.2,1];
 clock_species_names_u = {'LHY','EC','PRR9','PRR7','PRR5','TOC1','cP','COP1n_n','GIn'};
-clock_ylimit_T_u_gens={[1.6,0.14,1.1,4,1.5,0.25,1,1,4.5],[1.6,0.14,1.1,4,1.5,0.86,1,1,8.5],[1.6,0.14,1.1,4,1.5,0.86,1,1,8.5]};
+clock_ylimit_T_u_gens={[1.6,0.14,1.1,4,1.5,0.25,1,1,4.5],[1.6,0.14,1.1,4,1.5,0.86,1,1,8.5]};
 
-mutant_genotypes={{'wt'},{'elf3'},{'YHB'}};%,{'elf3','YHB'}};
+mutant_genotypes={{'wt'},{'elf3'}};%,{'YHB'},{'elf3','YHB'}};
 nG=length(mutant_genotypes);
 
 Models = {'P2011', 'F2014'};

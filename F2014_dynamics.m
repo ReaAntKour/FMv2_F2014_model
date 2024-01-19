@@ -26,6 +26,7 @@ cond.period=24;
 cond.dawn=sunrise;
 cond.photoperiod = sunset-sunrise;
 L = light_conditions(t,cond);
+D=1-L;
 
 % Define the variables
 LHYm = y(1);
@@ -73,10 +74,8 @@ param = num2cell(param);
 	t9,m1,m3,m4,m5,m6,m7,m8,m9,m10,m11,m12,m13,m14,m15,m16,m17,m18,m22,...
 	m23,m24,m25,m26,m28,m29,m30,m32,m34,m35,m36,m37,m38,m39,m42,m43,m44,...
 	m45,m46,m47,p11,p16,p23,p25,p28,p29,q1,q3,m19,m20,m21,m27,m31,m33,...
-	n5,n6,n14,p6,p7,p10,p12,p13,p14,p15,yhb] = deal(param{:});
-BL=L;
-L=max(L+yhb,1);
-D=1-L;
+	n5,n6,n14,p6,p7,p10,p12,p13,p14,p15] = deal(param{:});
+
 
 % Equations
 LC = (LHYp + f5 * CCA1p);
@@ -86,7 +85,7 @@ P5trans = t5 * PRR5c - t6 * PRR5n;
 Ttrans = t7 * TOC1c - (t8) / (1 + m37 * PRR5n) * TOC1n;
 E34prod = p25 * ELF3p * ELF4d;
 E3deg = m30 * COP1d + m29 * COP1n + m9 + m10 * GIn;
-ZGprod = p12 * ZTL * GIc - (p13 * (1-BL) + p10 * (BL)) * ZG;
+ZGprod = p12 * ZTL * GIc - (p13 * D + p10 * L) * ZG;
 ELF3tot = ELF3p + ELF34;
 Gtrans = p28 * GIc - (p29) / (1 + t9 * ELF3tot) * GIn;
 

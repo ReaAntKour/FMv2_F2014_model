@@ -8,7 +8,7 @@ run_phenology_model=1;
 %% input envirnmental conditions
 temp = 22;
 rise = 0;
-set = 8;
+set = 12;
 load('weather.mat')
 hour=weather(:,1);
 T=temp*weather(:,2);

@@ -48,7 +48,7 @@ param = num2cell(P);
 	~,~,~,~,~,~,~,~,~,~,~,~,~,~,~,~,~,~,~,...
 	~,~,~,~,~,~,~,~,~,~,~,~,~,~,~,~,~,...
 	~,~,~,~,~,~,~,~,~,~,~,~,~,~,~,~,...
-	~,~,~,~,~,~,~,~,~,~,~,~] = deal(param{:});
+	~,~,~,~,~,~,~,~,~,~,~] = deal(param{:});
     
 
 % Define the variables
@@ -60,16 +60,16 @@ ELF3p = Y(:,20);
 u.EC = ((LUXp + f6 * NOXp) .* (ELF34 + f1 * ELF3p)) ./ (1 + f3 * (LUXp + f2 * NOXp) + f4 * (ELF34 + f1 * ELF3p));
 
 u.COP1n_n = Y(:,25);
-u.LHY = (Y(:,2) + Y(:,4))/1.5; % LHY + CCA1
+u.LHY = Y(:,2) + Y(:,4); % LHY + CCA1
 u.PRR9 = Y(:,7);
-u.PRR7 = Y(:,9)/2.8;
+u.PRR7 = Y(:,9);
 u.cP = Y(:,5);
-u.GIn = Y(:,31)*40;
+u.GIn = Y(:,31);
 
 %%%%%%% which one? Does it match the P2011 one? 
 %%%%%%% Can I test outputs against simulations and data from previous?
 % u.PRR5 = Y(:,11);% cytoplasmic
-u.PRR5 = Y(:,12)/1.2;% nuclear
-u.TOC1 = Y(:,14)*1.2;% nuclear
+u.PRR5 = Y(:,12);% nuclear
+u.TOC1 = Y(:,14);% nuclear
 % u.TOC1 = Y(:,15);% cytoplasmic
 

@@ -154,7 +154,6 @@ p12 = 8;
 p13 = 0.7;
 p14 = 0.3;
 p15 = 3;
-yhb=0;
 
 %% Mutants 
 
@@ -172,7 +171,7 @@ for i = 1:length(genotype)
     elseif strcmp(genotype{i},'elf3')
         p16 = 0; % no ELF3 protein production. (mRNA is not directly affected)
     elseif strcmp(genotype{i},'YHB')
-        yhb=1;
+        error('still to be added!')
 	elseif strcmp(genotype{i},'wt')
 		% Do nothing
 	elseif strcmp(genotype{i},'wildtype')
@@ -185,4 +184,4 @@ for i = 1:length(genotype)
 end
 
 %% Define param
-param = [a3,a4,a5,a6,a7,a8,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14,r15,r16,r17,r18,r19,r20,r21,r22,r23,r24,r25,r26,r27,r28,r29,r30,r31,r32,r33,r34,r35,r36,r37,r38,r40,n1,f1,f2,f3,f4,f5,f6,t5,t6,t7,t8,t9,m1,m3,m4,m5,m6,m7,m8,m9,m10,m11,m12,m13,m14,m15,m16,m17,m18,m22,m23,m24,m25,m26,m28,m29,m30,m32,m34,m35,m36,m37,m38,m39,m42,m43,m44,m45,m46,m47,p11,p16,p23,p25,p28,p29,q1,q3,m19,m20,m21,m27,m31,m33,n5,n6,n14,p6,p7,p10,p12,p13,p14,p15,yhb];
+param = [a3,a4,a5,a6,a7,a8,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14,r15,r16,r17,r18,r19,r20,r21,r22,r23,r24,r25,r26,r27,r28,r29,r30,r31,r32,r33,r34,r35,r36,r37,r38,r40,n1,f1,f2,f3,f4,f5,f6,t5,t6,t7,t8,t9,m1,m3,m4,m5,m6,m7,m8,m9,m10,m11,m12,m13,m14,m15,m16,m17,m18,m22,m23,m24,m25,m26,m28,m29,m30,m32,m34,m35,m36,m37,m38,m39,m42,m43,m44,m45,m46,m47,p11,p16,p23,p25,p28,p29,q1,q3,m19,m20,m21,m27,m31,m33,n5,n6,n14,p6,p7,p10,p12,p13,p14,p15];
