@@ -79,8 +79,8 @@ param = num2cell(param);
 BlueL=L;
 BlueD=D;
 if yhb
-	RedL=1;
-	RedD=0;
+	RedL=(1+L)/2;
+	RedD=1-RedL;
 else
 	RedL=L;
 	RedD=D;

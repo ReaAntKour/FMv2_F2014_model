@@ -185,12 +185,14 @@ function make_and_format_plots(Tc,Yc,Lc,clock_dynamics_model_i,options,clock_spe
 	
 	% Plot the light conditions
 	subplot(1,clock_nS+1,1)
-	plot(Tc,Lc,'b--')
+	plot(Tc,Yc(:,2*(clock_dynamics_model_i==1)+5*(clock_dynamics_model_i==2)),'DisplayName','P')
+% 	plot(Tc,Lc,'b--')
 	hold on
 	box on
 	ylim([0,1.1])
 	xlabel('Time (ZT Hrs)')
-	ylabel('Light')
+	ylabel('Relative amount')
+	title('Dark Accumulator')
 	
 	circaplotlocal(options)
 end
