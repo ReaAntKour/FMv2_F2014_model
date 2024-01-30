@@ -29,7 +29,7 @@ param=load_F2014_parameters();% Code edited here to load parameters from new fil
 
 Tout = [0:0.05:27];
 % Run model for 27 hours:
-[T,Y]=ode15s(@(t,y) F2014_dynamics(t,y,param,sunrise,sunset),Tout,clock_state_0);% code edited here to update to new model
+[T,Y]=ode15s(@(t,y) F2014_dynamics(t,y,param,sunrise,sunset),Tout,clock_state_0);% Code edited here to update to new model
 
 clock_output = struct();
 clock_output.T = T;

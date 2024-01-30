@@ -21,16 +21,16 @@ options.photoperiod=set-rise; % only used for circaplot, elsewhere the sunset-su
 % Define Hypocotyl parameters
 options.hypocotyl_parameters=struct();
 load('Hypocotyl_parameters')
-options.hypocotyl_parameters.a1 = paramHy(1);%0.9;%10/24;
-options.hypocotyl_parameters.a2 = paramHy(2);%0.03103;%0;
-options.hypocotyl_parameters.a3 = paramHy(3);%0.8;%100;
+options.hypocotyl_parameters.a1 = paramHy(1);
+options.hypocotyl_parameters.a2 = paramHy(2);
+options.hypocotyl_parameters.a3 = paramHy(3);
 
 % load parameters other than clock and PIF parameters
 load('parameter.mat')
 p=parameter;
 
 %Specify the genotypes to run
-mutant_genotypes={{'wt'},{'elf3'}};%,{'YHB'},{'elf3','YHB'}};
+mutant_genotypes={{'wt'},{'YHB'}};%,{'elf3'},{'elf3','YHB'}};
 nG=length(mutant_genotypes);
 
 % Name the models to run

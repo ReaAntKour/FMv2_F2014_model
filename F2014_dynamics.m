@@ -78,13 +78,10 @@ param = num2cell(param);
 
 BlueL=L;
 BlueD=D;
-if yhb
-	RedL=(1+L)/2;
-	RedD=1-RedL;
-else
-	RedL=L;
-	RedD=D;
-end
+
+RedL=(yhb+L)/(yhb+1);
+RedD=1-RedL;
+
 L=RedL;
 D=RedD;
 

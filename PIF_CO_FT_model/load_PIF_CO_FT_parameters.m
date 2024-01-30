@@ -92,6 +92,16 @@ if ismember('cop1',genotype)
     P.n5 = 0;
 end
 
+%% Code edited here to add YHB mutant
+if ismember('YHB',genotype)
+    % constitutively active PhyB, not light-dependent
+    P.YHB = 1; % does not depend on yhb parameter of clock model. Only phyB here, not all red light inputs.
+else
+	% wild-type has light-dependent PhyB activity
+    P.YHB = 0;
+end
+%% Code edit ends here
+
 % Modify parameters according to temperature
 if temperature == 22
     %do nothing

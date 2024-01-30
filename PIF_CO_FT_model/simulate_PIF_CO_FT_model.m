@@ -40,4 +40,5 @@ Hyp_length=hp.a1*trapz(T,min(Y(:,8),hp.a3)-hp.a2);
 PIF_output = struct();
 PIF_output.T = T;
 PIF_output.Y = Y;
+PIF_output.FTarea = dailyFTarea;
 PIF_output.Hyp_length = Hyp_length;
