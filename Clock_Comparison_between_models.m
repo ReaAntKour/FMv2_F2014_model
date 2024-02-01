@@ -25,7 +25,7 @@ clock_species_names_u = {'LHY','EC','PRR9','PRR7','PRR5','TOC1','cP','COP1n_n','
 %clock_ylimit_T_u_gens={[1.6,0.14,1.1,4,1.5,0.25,1,1,4.5],[1.6,0.14,1.1,4,1.5,0.86,1,1,8.5]};
 clock_ylimit_T_u_gens={[1.6,0.14,1.1,4,1.5,0.25,1,1,4.5],[1.6,0.14,1.1,4,1.5,0.86,1,1,8.5],[1.6,0.14,1.1,4,1.5,0.86,1,1,8.5],[1.6,0.14,1.1,4,1.5,0.86,1,1,8.5]};
 
-mutant_genotypes={{'wt'},{'YHB'}};%,{'elf3'},{'elf3','YHB'}};
+mutant_genotypes={{'wt'},{'YHB'},{'elf3'},{'elf3','YHB'}};
 nG=length(mutant_genotypes);
 
 Models = {'P2011', 'F2014'};
@@ -44,6 +44,7 @@ c.period = 24;
 c.phase = 0;
 c.dawn = 0;
 
+Model_output_to_file=struct();
 for ig=1:nG
 	% set the genotype
 	options.genotype = mutant_genotypes{ig};
@@ -52,12 +53,14 @@ for ig=1:nG
 	for clock_dynamics_model_i=1:2
 		%% Clock model
 		if clock_dynamics_model_i==1
+			clock_species_colNames = {'LHYm','P','GIZ','GIE','LHYp','TOCm','PRR9p','PRR5m','PRR5p','GIp','TOCp','ZTL','EC','GIm','PRR9m','PRR7m','PRR7p','ELF4m','ELF4p','LHYpm','HY5','HFR1','ELF3m','ELF3pc','ELF3pn','COP1pnn','COP1pnd','LUXm','LUXp','COP1pc'};
 			parameters = load_P2011_parameters(options.genotype);
 			clock_dynamics = @P2011_dynamics;
 			clock_dynamics_wrapper = @wrap_P2011_model_dynamics;
 			y0=[1.0151 0.956 0.0755 0.0041 0.506 0.0977 0.0238 0.0731 0.0697 0.0196 0.0435 0.2505 0.0709 0.1017 0.0658 0.4016 0.1167 0.1012 0.207 0.0788 0.3102 0.0553 0.2991 0.1503 0.0286 0.65 0.2566 0.1012 0.576 0.3269];
 			clock_Sidx = clock_Sidx1;
 		else
+			clock_species_colNames = {'LHYm','LHYp','CCA1m','CCA1p','P','PRR9m','PRR9p','PRR7m','PRR7p','PRR5m','PRR5c','PRR5n','TOC1m','TOC1n','TOC1c','ELF4m','ELF4p','ELF4d','ELF3m','ELF3p','ELF34','LUXm','LUXp','COP1c','COP1n','COP1d','ZTL','ZG','GIm','GIc','GIn','NOXm','NOXp','RVE8m','RVE8p'};
 			parameters = load_F2014_parameters(options.genotype,paramSet);
 			clock_dynamics = @F2014_dynamics;
 			clock_dynamics_wrapper = @wrap_F2014_model_dynamics;
@@ -69,8 +72,30 @@ for ig=1:nG
 
 		make_and_format_plots(Tc,Yc,Lc,clock_dynamics_model_i,options,clock_species_names,clock_nS,clock_Sidx,clock_ylimit_T)
 
+		Model_output_to_file.(Models{clock_dynamics_model_i})(ig).Time = Tc;
+		for ic=1:length(clock_species_colNames)
+			Model_output_to_file.(Models{clock_dynamics_model_i})(ig).(clock_species_colNames{ic}) = Yc(:,ic);
+		end
 % 		figure('Name',[char(string(join(options.genotype))),' u model: ',int2str(clock_dynamics_model_i)])
 % 		make_and_format_plots_from_u(u,Lc,Models{clock_dynamics_model_i},options,clock_species_names_u,clock_ylimit_T_u)
+	end
+end
+
+for clock_dynamics_model_i=1:2
+	if clock_dynamics_model_i==1
+		clock_species_colNames = {'LHYm','P','GIZ','GIE','LHYp','TOCm','PRR9p','PRR5m','PRR5p','GIp','TOCp','ZTL','EC','GIm','PRR9m','PRR7m','PRR7p','ELF4m','ELF4p','LHYpm','HY5','HFR1','ELF3m','ELF3pc','ELF3pn','COP1pnn','COP1pnd','LUXm','LUXp','COP1pc'};
+	else
+		clock_species_colNames = {'LHYm','LHYp','CCA1m','CCA1p','P','PRR9m','PRR9p','PRR7m','PRR7p','PRR5m','PRR5c','PRR5n','TOC1m','TOC1n','TOC1c','ELF4m','ELF4p','ELF4d','ELF3m','ELF3p','ELF34','LUXm','LUXp','COP1c','COP1n','COP1d','ZTL','ZG','GIm','GIc','GIn','NOXm','NOXp','RVE8m','RVE8p'};
+	end
+	ModelHypFlMut=table();
+	ModelHypFlMut.Time = Model_output_to_file.(Models{clock_dynamics_model_i})(1).Time;
+	for ic=1:length(clock_species_colNames)
+		for ig=1:nG
+			% set the genotype
+			options.genotype = mutant_genotypes{ig};
+			ModelHypFlMut.(string(join(options.genotype,''))) = Model_output_to_file.(Models{clock_dynamics_model_i})(ig).(clock_species_colNames{ic});
+		end
+		writetable(ModelHypFlMut,['ModelClockMut_',Models{clock_dynamics_model_i},'.xlsx'],'Sheet',clock_species_colNames{ic})
 	end
 end
 
@@ -183,7 +208,7 @@ function make_and_format_plots(Tc,Yc,Lc,clock_dynamics_model_i,options,clock_spe
 		text(v(1)+0.5,v(4)*0.8,clock_species_names{clock_j},'FontAngle','italic')
 	end
 	
-	% Plot the light conditions
+	% Plot the Dark Accumulator
 	subplot(1,clock_nS+1,1)
 	plot(Tc,Yc(:,2*(clock_dynamics_model_i==1)+5*(clock_dynamics_model_i==2)),'DisplayName','P')
 % 	plot(Tc,Lc,'b--')

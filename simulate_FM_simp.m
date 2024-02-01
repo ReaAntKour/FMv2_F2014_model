@@ -56,6 +56,7 @@ end
 day_idx = 1;
 has_flowered = false;
 CumPhenThrm=0;
+CumPhenThrmAll=zeros(90,1); % Code edited here to keep track of CumPhenThrm
 
 while day_idx <= N_max_days && ~(has_flowered)
     %initial timepoint
@@ -74,7 +75,8 @@ while day_idx <= N_max_days && ~(has_flowered)
     end
     CumPhenThrm = DayPhenThrm+CumPhenThrm;
     has_flowered = flowering_threshold_test(CumPhenThrm,flowering_thresh_geno,p);
-    
+    CumPhenThrmAll(day_idx)=CumPhenThrm; % Code edited here to keep track of CumPhenThrm
+
     %Update day index
     day_idx = day_idx+1;
 end
@@ -100,6 +102,7 @@ try
 	sim_data.PIF_output = PIF_output;
 	sim_data.Fl = day_idx - 1;
 	sim_data.Hyp = PIF_output.Hyp_length;
+    sim_data.CumPhenThrm = CumPhenThrmAll; % Code edited here to keep track of CumPhenThrm
     output = [sim_data.clock,sim_data.PIF,sim_data.Hyp,sim_data.Fl];
 catch
     %Do nothing
