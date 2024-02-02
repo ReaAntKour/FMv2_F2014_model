@@ -185,7 +185,7 @@ for i = 1:length(genotype)
     elseif strcmp(genotype{i},'elf3')
         p16 = 0; % no ELF3 protein production. (mRNA is not directly affected)
     elseif strcmp(genotype{i},'YHB')
-        yhb=0.5;
+        yhb=3; % 0.5, 1 or 3
 	elseif strcmp(genotype{i},'wt')
 		% Do nothing
 	elseif strcmp(genotype{i},'wildtype')

@@ -37,7 +37,12 @@ paramSet=1;
 options = struct();
 options.temperature = 22; % temperature (oC) (only 22 or 27oC accepted)
 options.entrain = 12; % entrain model at 12/12
-options.photoperiod = 12; % run model in constant dark
+
+Phot_All=[12, 24, 0];
+Time_Phot_All={'Time_Since_Dawn','Time_In_Constant_Light','Time_In_Constant_Dark'};
+for phot_i=1:3
+options.photoperiod = Phot_All(phot_i); % run model in constant dark
+Time_Phot = Time_Phot_All{phot_i};
 
 % Load light conditions into 'c' for common light function
 c.period = 24;
@@ -88,17 +93,22 @@ for clock_dynamics_model_i=1:2
 		clock_species_colNames = {'LHYm','LHYp','CCA1m','CCA1p','P','PRR9m','PRR9p','PRR7m','PRR7p','PRR5m','PRR5c','PRR5n','TOC1m','TOC1n','TOC1c','ELF4m','ELF4p','ELF4d','ELF3m','ELF3p','ELF34','LUXm','LUXp','COP1c','COP1n','COP1d','ZTL','ZG','GIm','GIc','GIn','NOXm','NOXp','RVE8m','RVE8p'};
 	end
 	ModelHypFlMut=table();
-	ModelHypFlMut.Time = Model_output_to_file.(Models{clock_dynamics_model_i})(1).Time;
+
+	if options.photoperiod==0
+		ModelHypFlMut.(Time_Phot) = Model_output_to_file.(Models{clock_dynamics_model_i})(1).Time+12;
+	else
+		ModelHypFlMut.(Time_Phot) = Model_output_to_file.(Models{clock_dynamics_model_i})(1).Time;
+	end
 	for ic=1:length(clock_species_colNames)
 		for ig=1:nG
 			% set the genotype
 			options.genotype = mutant_genotypes{ig};
 			ModelHypFlMut.(string(join(options.genotype,''))) = Model_output_to_file.(Models{clock_dynamics_model_i})(ig).(clock_species_colNames{ic});
 		end
-		writetable(ModelHypFlMut,['ModelClockMut_',Models{clock_dynamics_model_i},'.xlsx'],'Sheet',clock_species_colNames{ic})
+		writetable(ModelHypFlMut,['ModelClockMut_phot',int2str(options.photoperiod),'_',Models{clock_dynamics_model_i},'.xlsx'],'Sheet',clock_species_colNames{ic})
 	end
 end
-
+end
 if contains(pwd,'nenya')
 	rmpath('C:\Users\nenya\OneDrive - University of Glasgow\Projects\Matt\Seaton 2015\published_model\plotting_tools')
 else
