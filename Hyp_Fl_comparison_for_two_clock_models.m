@@ -97,27 +97,27 @@ for ig=1:nG
 	end
 end
 
-%% Problematic code
-% combinations only since R2023a but in R2023b the writetable seems broken.
-% Fixed by running varNames in R2023b and saving output as .mat and then
-% running the rest of the code in R2022a where it works.
-sz = [21,9];
-varTypes = {'double','double','double','double','double','double','double','double','double'};
-genotypes = fieldnames(Model_output_to_file)';
-variables = {'HypocotylLength','DaysToFlower'};
-varNames = [{'photoperiod'};string(join(table2cell(combinations(variables,genotypes)),'_'))];
-for clock_dynamics_model_i=1:2
-	ModelHypFlMut=table('Size',sz,'VariableTypes',varTypes,'VariableNames',varNames);
-	ModelHypFlMut.photoperiod = photoperiod;
-	for ig=1:nG
-		% set the genotype
-		options.genotype = mutant_genotypes{ig};
-		ModelHypFlMut.(string(join([{'HypocotylLength'},join(options.genotype,'')],'_'))) = Model_output_to_file.(string(join(options.genotype,''))).(Models{clock_dynamics_model_i}).Hypocotyl_length_model;
-		ModelHypFlMut.(string(join([{'DaysToFlower'},join(options.genotype,'')],'_'))) = Model_output_to_file.(string(join(options.genotype,''))).(Models{clock_dynamics_model_i}).Days_to_flower_model;
-	end
-	writetable(ModelHypFlMut,['ModelHypFlMut_',Models{clock_dynamics_model_i},'.csv'])
-end
-%% end of Problematic code
+% %% Problematic code
+% % combinations only since R2023a but in R2023b the writetable seems broken.
+% % Fixed by running varNames in R2023b and saving output as .mat and then
+% % running the rest of the code in R2022a where it works.
+% sz = [21,9];
+% varTypes = {'double','double','double','double','double','double','double','double','double'};
+% genotypes = fieldnames(Model_output_to_file)';
+% variables = {'HypocotylLength','DaysToFlower'};
+% varNames = [{'photoperiod'};string(join(table2cell(combinations(variables,genotypes)),'_'))];
+% for clock_dynamics_model_i=1:2
+% 	ModelHypFlMut=table('Size',sz,'VariableTypes',varTypes,'VariableNames',varNames);
+% 	ModelHypFlMut.photoperiod = photoperiod;
+% 	for ig=1:nG
+% 		% set the genotype
+% 		options.genotype = mutant_genotypes{ig};
+% 		ModelHypFlMut.(string(join([{'HypocotylLength'},join(options.genotype,'')],'_'))) = Model_output_to_file.(string(join(options.genotype,''))).(Models{clock_dynamics_model_i}).Hypocotyl_length_model;
+% 		ModelHypFlMut.(string(join([{'DaysToFlower'},join(options.genotype,'')],'_'))) = Model_output_to_file.(string(join(options.genotype,''))).(Models{clock_dynamics_model_i}).Days_to_flower_model;
+% 	end
+% 	writetable(ModelHypFlMut,['ModelHypFlMut_',Models{clock_dynamics_model_i},'.csv'])
+% end
+% %% end of Problematic code
 
 rmpath('C:\Users\ra134k\OneDrive - University of Glasgow\Projects\Matt\Seaton 2015\published_model\plotting_tools')
 rmpath('PIF_CO_FT_model')

@@ -111,7 +111,7 @@ out(3) = LCcommon - m1 * CCA1m;
 out(4) = (L + m4 * D) * CCA1m - m3 * CCA1p;
 
 % P
-out(5) = p7 * D * (1 - P) - m11 * P * L;
+out(5) = p7 * BlueD * (1 - P) - m11 * P * BlueL; % Dark accumulator affected by "blue" (non-phy) light
 
 % PRR9m
 out(6) = q3 * P * L - m12 * PRR9m + (1 + a3 * r33 * RVE8p) / ((1 + r33 * RVE8p) * (1 + (r5 * LC)^2) * (1 + (r6 * EC)^2) * (1 + (r7 * TOC1n)^2) * (1 + (r40 * PRR5n)^2));
