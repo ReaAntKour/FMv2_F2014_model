@@ -14,10 +14,10 @@ c.photoperiod = sunset-sunrise;
 
 
 % Convert clock dynamics into input struct for PIF_CO_FT model
-if clock_dynamics_model_i==1
+if clock_dynamics_model_i<3
 	clock_parameters = load_P2011_parameters(flowering_genotype);
 	u = wrap_P2011_model_dynamics(clock_output.T,clock_output.Y,clock_parameters); %%%%%%%%%%%%%%%%%%%%%%% Only call to wrap_P2011 function
-elseif clock_dynamics_model_i==2
+else
 	clock_parameters = load_F2014_parameters(flowering_genotype);
 	u = wrap_F2014_model_dynamics(clock_output.T,clock_output.Y,clock_parameters); %%%%%%%%%%%%%%%%%%%%%%% Only call to wrap_F2014 function
 end

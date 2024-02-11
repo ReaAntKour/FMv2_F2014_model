@@ -167,7 +167,7 @@ p15 = 3;
 
 % my additional parameters
 n1 = 1;
-yhb=0;
+yhb = 0;
 
 %% Mutants 
 
@@ -185,7 +185,7 @@ for i = 1:length(genotype)
     elseif strcmp(genotype{i},'elf3')
         p16 = 0; % no ELF3 protein production. (mRNA is not directly affected)
     elseif strcmp(genotype{i},'YHB')
-        yhb=1; % 0.5, 1 or 3
+        yhb = 3; % 0.5, 1 or 3
 	elseif strcmp(genotype{i},'wt')
 		% Do nothing
 	elseif strcmp(genotype{i},'wildtype')
