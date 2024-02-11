@@ -15,7 +15,7 @@ addpath('PIF_CO_FT_model')
 %% Clock model
 clock_dynamics_model_i=2;
 clock_species_names_all = {'LHYm','LHYp','CCA1m','CCA1p','P','PRR9m','PRR9p','PRR7m','PRR7p','PRR5m','PRR5c','PRR5n','TOC1m','TOC1n','TOC1c','ELF4m','ELF4p','ELF4d','ELF3m','ELF3p','ELF34','LUXm','LUXp','COP1c','COP1n','COP1d','ZTL','ZG','GIm','GIc','GIn','NOXm','NOXp','RVE8m','RVE8p'};
-clock_dynamics = @F2014_dynamics;
+clock_dynamics = @F2014_dynamics_COP1;
 clock_dynamics_wrapper = @wrap_F2014_model_dynamics;
 y0=0.1*ones(1,35);
 clock_Sidx = 1:length(clock_species_names_all);% [1, 3, 5, 6, 9, 11, 29, 25]; % {'LHYm'}    {'CCA1m'}    {'GIm'}    {'PRR9m'}    {'COP1pnn'}
@@ -27,7 +27,7 @@ clock_species_names_u = {'LHY','EC','PRR9','PRR7','PRR5','TOC1','cP','COP1n_n','
 %clock_ylimit_T_u_gens={[1.6,0.14,1.1,4,1.5,0.25,1,1,4.5],[1.6,0.14,1.1,4,1.5,0.86,1,1,8.5]};
 clock_ylimit_T_u_gens={[1.6,0.14,1.1,4,1.5,0.25,1,1,4.5],[1.6,0.14,1.1,4,1.5,0.86,1,1,8.5],[1.6,0.14,1.1,4,1.5,0.86,1,1,8.5],[1.6,0.14,1.1,4,1.5,0.86,1,1,8.5]};
 
-mutant_genotypes={{'wt'},{'YHB'}};%,{'elf3'},{'elf3','YHB'}};
+mutant_genotypes={{'wt'},{'elf3'}};%,{'YHB'},{'elf3','YHB'}};
 nG=length(mutant_genotypes);
 
 Models = {'P2011', 'F2014'};
@@ -39,7 +39,7 @@ paramSet=1;
 options = struct();
 options.temperature = 22; % temperature (oC) (only 22 or 27oC accepted)
 options.entrain = 12; % entrain model at 12/12
-options.photoperiod = 12;
+options.photoperiod = 0;
 
 % Load light conditions into 'c' for common light function
 c.period = 24;
