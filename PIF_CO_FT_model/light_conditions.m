@@ -2,8 +2,8 @@ function L = light_conditions(t,c)
 %
 %   Copyright 
 	
-	if isfield(c,'LightAmp')
-		LightAmp = c.LightAmp; %The light intensity.
+	if isfield(c,'LightAmp') %%%%%%%%% Not currently passed because c is not original c!
+		LightAmp = c.LightAmp; %The light intensity. %%%%%%%%% Not currently passed because c is not original c!
 	else
 		LightAmp = 1; %The light intensity.
 	end

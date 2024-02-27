@@ -48,9 +48,9 @@ c.dawn = 0;
 twilightPer=0.00005; %The duration of time between value of force in dark and value of force in light.
 LightAmp = 0.3; %The light intensity.
 
-Phot_All={12, 24, 0, [[c.dawn, c.dawn+twilightPer, c.dawn+12-twilightPer, c.dawn+12, c.period]',[0, LightAmp, LightAmp, 0, 0]'], [0,0;twilightPer,0.10;1-twilightPer,0.10;1,0.40;9-twilightPer,0.40;9,0.30;15-twilightPer,0.30;15,0.10;18-twilightPer,0.10;18,0;24,0], [[c.dawn, c.dawn+twilightPer, c.dawn+18-twilightPer, c.dawn+18, c.period]',[0, LightAmp, LightAmp, 0, 0]']};
-Time_Phot_All={'Time_Since_Dawn','Time_In_Constant_Light','Time_In_Constant_Dark','Time_Since_Measure_Start','Time_Since_18_Variable','Time_Since_18_dim'};
-Phot_name_All = {'12h','24h','0h','12h_reduced_30_intensity','18h_variable','18h_reduced_30_intensity'};
+Phot_All={12, 24, 0, [[c.dawn, c.dawn+twilightPer, c.dawn+12-twilightPer, c.dawn+12, c.period]',[0, LightAmp, LightAmp, 0, 0]'], [0,0;twilightPer,0.10;1-twilightPer,0.10;1,0.40;9-twilightPer,0.40;9,0.30;15-twilightPer,0.30;15,0.10;18-twilightPer,0.10;18,0;24,0], [[c.dawn, c.dawn+twilightPer, c.dawn+18-twilightPer, c.dawn+18, c.period]',[0, LightAmp, LightAmp, 0, 0]'],[[c.dawn, c.period]',[LightAmp, LightAmp]']};
+Time_Phot_All={'Time_Since_Dawn','Time_In_Constant_Light','Time_In_Constant_Dark','Time_Since_Measure_Start','Time_Since_18_Variable','Time_Since_18_dim','Time_In_Constant_Light'};
+Phot_name_All = {'12h','24h','0h','12h_reduced_30_intensity','18h_variable','18h_reduced_30_intensity','24h_30_intensity'};
 
 for phot_i=1:length(Phot_All)
 	options.photoperiod = Phot_All{phot_i}; % run model in constant dark
