@@ -1,4 +1,4 @@
-function u = wrap_P2011_model_dynamics(T,Y,P) % only called from "simulate_PIF_CO_FT_model"
+function u = wrap_P2011_model_dynamics(T,Y,P)
 %
 %   Copyright 2018 Yin Hoon Chew, Daniel Seaton, Andrew Millar, and The University of Edinburgh
 %
@@ -14,7 +14,6 @@ function u = wrap_P2011_model_dynamics(T,Y,P) % only called from "simulate_PIF_C
 %   See the License for the specific language governing permissions and
 %   limitations under the License.
 
-u=struct;
 u.T = T;
 nT = length(T);
 varnames = {'LHY','EC','PRR9','PRR7','PRR5','TOC1','cP','COP1n_n','GIn'};

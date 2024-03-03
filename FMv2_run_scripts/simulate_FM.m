@@ -1,4 +1,4 @@
-function [output,sim_data] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model,clock_dynamics_model_i,fileID) % Code edited here to add "clock_dynamics_model_i" % WARNING! May cause issues with fileID being in wrong position
+function [output,sim_data] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model,fileID)
 %% simulate the Framework Model v2. This function is the core function,
 %
 % Input:
@@ -155,9 +155,7 @@ while day_idx <= N_max_days && ~(has_flowered)
     
     %run phenology model
     if run_phenology_model
-		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% phen edited and will not work with
-		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% this input
-    [DayPhenThrm,FT_module_state] = phen(T,t,sunrise(t),sunset(t),flowering_thresh_geno,clock_parameters,clock_output,FT_module_state,p,clock_dynamics_model_i);
+    [DayPhenThrm,FT_module_state] = phen(T,t,sunrise(t),sunset(t),flowering_thresh_geno,clock_parameters,clock_output,FT_module_state,p);
     else
         DayPhenThrm = 0;
     end
@@ -435,7 +433,6 @@ output = [];
 try
     %Try to instantiate a complete output as far as possible
     sim_data.metadata.hour = hour;
-    sim_data.metadata.T = T; % Code edited to add Temperature as output
     sim_data.metadata.sunrise = sunrise;
     sim_data.metadata.sunset = sunset;
     sim_data.metadata.CO2 = CO2;

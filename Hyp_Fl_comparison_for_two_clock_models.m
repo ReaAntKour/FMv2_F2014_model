@@ -1,9 +1,19 @@
 % This script simulates and plots Flowering time and  Hypocotyl length  
-% using for the clock model either the P2011 model or the F2014 model in  
-% various photoperiod conditions.
+% using for the clock model either the P2011 model or the F2014 model, with
+% the Global or COP1-only YHB mutant version, in various photoperiod
+% conditions. The script produces plots for each mutant and .csv files with
+% the results from each of the four model variants.
+
+%   Copyright %%%%%%%%%%%%%%%%%%%
 
 clear
 run_phenology_model=1;
+
+% Include model folders in path
+addpath('PIF_CO_FT_model')
+addpath('circadian_module')
+addpath('parameters')
+addpath('phenology')
 
 %% input envirnmental conditions
 temp = 22;
@@ -39,14 +49,6 @@ Hyp_length = zeros(nG,nPh,length(Models));
 FT_area = zeros(nG,nPh,length(Models));
 Days_to_flower = zeros(nG,nPh,length(Models));
 
-% estimate hypocotyl parameters from our data
-%paramHy=FitHypModelToData();
-%save('Hypocotyl_parameters.mat','paramHy','paramHy')
-
-% Include model folders and plotting folders in path
-addpath('C:\Users\ra134k\OneDrive - University of Glasgow\Projects\Matt\Seaton 2015\published_model\plotting_tools')
-addpath('PIF_CO_FT_model')
-
 Model_output_to_file=struct('wt',struct(),'YHB',struct(),'elf3',struct(),'elf3YHB',struct());
 for ig=1:nG
 	% set the genotype
@@ -62,7 +64,6 @@ for ig=1:nG
 			elseif clock_dynamics_model_i==2
 				clock_dynamics = @P2011_dynamics_COP1;
 			end
-% 			clock_dynamics_wrapper = @wrap_P2011_model_dynamics;
 			options.y0=[1.0151 0.956 0.0755 0.0041 0.506 0.0977 0.0238 0.0731 0.0697 0.0196 0.0435 0.2505 0.0709 0.1017 0.0658 0.4016 0.1167 0.1012 0.207 0.0788 0.3102 0.0553 0.2991 0.1503 0.0286 0.65 0.2566 0.1012 0.576 0.3269];
 			load('Hypocotyl_parameters_P2011')
 			options.hypocotyl_parameters.a1 = paramHy(1);
@@ -75,7 +76,6 @@ for ig=1:nG
 			elseif clock_dynamics_model_i==4
 				clock_dynamics = @F2014_dynamics_COP1;
 			end
-% 			clock_dynamics_wrapper = @wrap_F2014_model_dynamics;
 			options.y0=0.1*ones(1,35);
 			load('Hypocotyl_parameters_F2014')
 			options.hypocotyl_parameters.a1 = paramHy(1);
@@ -105,16 +105,10 @@ for ig=1:nG
 	end
 end
 
-%% Problematic code
-% function 'combinations' only since R2023a but in R2023b the writetable seems broken.
-% Fixed by running varNames in R2023b and saving output as .mat and then
-% running the rest of the code in R2022a where it works.
-sz = [21,9];% run only in R2023a
-varTypes = {'double','double','double','double','double','double','double','double','double'};% run only in R2023a
-genotypes = fieldnames(Model_output_to_file)';% run only in R2023a
-variables = {'HypocotylLength','DaysToFlower'};% run only in R2023a
-varNames = [{'photoperiod'};string(join(table2cell(combinations(variables,genotypes)),'_'))];% run only in R2023a
-% load('temp')% run only in R2022a with whole following loop (loop in both)
+%% Save output
+sz = [21,9];
+varTypes = {'double','double','double','double','double','double','double','double','double'};
+varNames=["photoperiod";"HypocotylLength_wt";"HypocotylLength_YHB";"HypocotylLength_elf3";"HypocotylLength_elf3YHB";"DaysToFlower_wt";"DaysToFlower_YHB";"DaysToFlower_elf3";"DaysToFlower_elf3YHB"];
 for clock_dynamics_model_i=1:length(Models)
 	ModelHypFlMut=table('Size',sz,'VariableTypes',varTypes,'VariableNames',varNames);
 	ModelHypFlMut.photoperiod = photoperiod;
@@ -124,14 +118,13 @@ for clock_dynamics_model_i=1:length(Models)
 		ModelHypFlMut.(string(join([{'HypocotylLength'},join(options.genotype,'')],'_'))) = Model_output_to_file.(string(join(options.genotype,''))).(Models{clock_dynamics_model_i}).Hypocotyl_length_model;
 		ModelHypFlMut.(string(join([{'DaysToFlower'},join(options.genotype,'')],'_'))) = Model_output_to_file.(string(join(options.genotype,''))).(Models{clock_dynamics_model_i}).Days_to_flower_model;
 	end
-	% writetable(ModelHypFlMut,['ModelHypFlMut_',Models{clock_dynamics_model_i},'.csv'])% run only in R2022a
+	writetable(ModelHypFlMut,['ModelHypFlMut_',Models{clock_dynamics_model_i},'.csv'])
 end
-% delete temp.mat manually after running R2022a
-save('temp')% run only in R2023a
-%% end of Problematic code
 
-rmpath('C:\Users\ra134k\OneDrive - University of Glasgow\Projects\Matt\Seaton 2015\published_model\plotting_tools')
 rmpath('PIF_CO_FT_model')
+rmpath('circadian_module')
+rmpath('parameters')
+rmpath('phenology')
 
 function make_and_format_plots(Phot,Hyp_length,FT_area,Days_to_flower,Models,clock_dynamics_model_i)
 	% Plot Flowering time and Hypocotyl length for different photoperiods

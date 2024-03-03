@@ -1,4 +1,4 @@
-function u = wrap_F2014_model_dynamics(T,Y,P) % only called from "simulate_PIF_CO_FT_model"
+function u = wrap_F2014_model_dynamics(T,Y,P)
 %
 %   Copyright 2018 Yin Hoon Chew, Daniel Seaton, Andrew Millar, and The University of Edinburgh
 %
@@ -14,7 +14,6 @@ function u = wrap_F2014_model_dynamics(T,Y,P) % only called from "simulate_PIF_C
 %   See the License for the specific language governing permissions and
 %   limitations under the License.
 
-u=struct;
 u.T = T;
 nT = length(T);
 varnames = {'LHY','EC','PRR9','PRR7','PRR5','TOC1','cP','COP1n_n','GIn'};
@@ -56,7 +55,6 @@ LUXp = Y(:,23);
 NOXp = Y(:,33);
 ELF34 = Y(:,21);
 ELF3p = Y(:,20);
-%%%%%%% Is this still usable in its new form? where does it appear? Does it need changing in format there?
 u.EC = ((LUXp + f6 * NOXp) .* (ELF34 + f1 * ELF3p)) ./ (1 + f3 * (LUXp + f2 * NOXp) + f4 * (ELF34 + f1 * ELF3p));
 
 u.COP1n_n = Y(:,25);
@@ -65,11 +63,7 @@ u.PRR9 = Y(:,7);
 u.PRR7 = Y(:,9)/2.6754;
 u.cP = Y(:,5);
 u.GIn = Y(:,31)*40.9;
-
-%%%%%%% which one? Does it match the P2011 one? 
-%%%%%%% Can I test outputs against simulations and data from previous?
-% u.PRR5 = Y(:,11);% cytoplasmic
 u.PRR5 = Y(:,12)*0.841;% nuclear
 u.TOC1 = Y(:,14)*1.21;% nuclear
-% u.TOC1 = Y(:,15);% cytoplasmic
+
 

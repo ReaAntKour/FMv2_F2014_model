@@ -60,7 +60,6 @@ nSP = length(starch_parameters);
 % starch_parameters.turnover_override = true;
 % starch_parameters.turnover = 0.90;
 
-run_phenology_model = 1; % Code edited to run phenology model (changed from 0 to 1)
+run_phenology_model = 0;
 
-% [output,sim_data] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model,clock_dynamics_model_i); % Code edited here to add "clock_dynamics_model_i"
-simulate_FM_simp(hour,T,sunrise,sunset,clock_parameters,clock_dynamics,clock_dynamics_model_i,p,run_phenology_model);
+[output,sim_data] = simulate_FM(hour,T,sunrise,sunset,CO2,PAR,Photoperiod,clock_parameters,starch_parameters,p,d,mf_use,run_phenology_model);

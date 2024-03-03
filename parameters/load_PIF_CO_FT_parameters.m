@@ -103,9 +103,9 @@ end
 %% Code edit ends here
 
 % Modify parameters according to temperature
-if temperature == 22
+if temperature == 22;
     %do nothing
-elseif temperature == 27
+elseif temperature == 27;
     % Relieve EC inhibition of PIF4 transcription
     P.g7 = P.g7*4;
     % FT activation at the higher temperature
