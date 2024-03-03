@@ -1,6 +1,6 @@
 function [output,sim_data] = simulate_FM_simp(hour,T,sunrise,sunset,clock_parameters,clock_dynamics,clock_dynamics_model_i,p,run_phenology_model,options)
-% Code significantly edited to simplify and include both models but
-% otherwise based on below:
+% Code significantly edited to simplify and remove modules not used in this
+% version and to include both circadian models. Otherwise based on below:
 %% simulate the Framework Model v2. This function is the core function,
 %
 % Input:
@@ -98,12 +98,14 @@ try
     sim_data.metadata.p = p;
     sim_data.metadata.run_phenology_model = run_phenology_model;
     
+	%% Code edited here to add new outputs and remove unused outputs
 	sim_data.clock_output = clock_output;
 	sim_data.PIF_output = PIF_output;
 	sim_data.Fl = day_idx - 1;
 	sim_data.Hyp = PIF_output.Hyp_length;
-    sim_data.CumPhenThrm = CumPhenThrmAll; % Code edited here to keep track of CumPhenThrm
+    sim_data.CumPhenThrm = CumPhenThrmAll;
     output = [sim_data.clock,sim_data.PIF,sim_data.Hyp,sim_data.Fl];
+	%% Code edit ends here
 catch
     %Do nothing
 end
