@@ -1,5 +1,6 @@
 function L = light_conditions(t,c)
-%
+% Code edited by Rea L Antoniou-Kourounioti (University of Glasgow) as indicated
+%%
 %   Copyright 2018 Yin Hoon Chew, Daniel Seaton, Andrew Millar, and The University of Edinburgh
 %
 %   Licensed under the Apache License, Version 2.0 (the "License");

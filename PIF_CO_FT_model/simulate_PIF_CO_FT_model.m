@@ -1,4 +1,9 @@
 function [dailyFTarea,FT_module_state,PIF_output] = simulate_PIF_CO_FT_model(sunrise, sunset, clock_output, clock_dynamics_model_i, FT_module_state, temperature, flowering_genotype, hp) % Code edited here to add new inputs and outputs
+% Code edited from original code to simulate the Arabidopsis Framework
+% model v2, described in Chew et al, 2017 [https://doi.org/10.1101/105437]. 
+% Copyright 2018 Yin Hoon Chew, Daniel Seaton, Andrew Millar, and The University of Edinburgh
+% by Rea L Antoniou-Kourounioti (University of Glasgow) as indicated
+%%
 assert(length(sunrise)==1)
 assert(length(sunset)==1)
 

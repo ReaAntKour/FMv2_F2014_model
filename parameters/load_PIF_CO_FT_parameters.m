@@ -1,4 +1,5 @@
 function P = load_PIF_CO_FT_parameters(genotype,temperature)
+% Code edited by Rea L Antoniou-Kourounioti (University of Glasgow) as indicated
 %% returns a vector of parameter values for a given genotype (e.g. {"pif4", "pif5"} is the pif4pif5 double knockout)
 % 
 % Input:

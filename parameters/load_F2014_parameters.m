@@ -5,8 +5,8 @@ function param=load_F2014_parameters(genotype,set)
 % Fogelmark K, Troein C (2014) Rethinking Transcriptional Activation in the Arabidopsis Circadian Clock. PLoS Comput Biol 10(7): e1003705. doi:10.1371/journal.pcbi.1003705
 
 % Code:
-%   Copyright 2023 Rea L Antoniou-Kourounioti, and The University of Glasgow
-%%%%%%%%%%% Decide on Licence and update copyright and licence accordingly
+%   Copyright 2024 Rea L Antoniou-Kourounioti and The University of Glasgow
+%
 %   Licensed under the Apache License, Version 2.0 (the "License");
 %   you may not use this file except in compliance with the License.
 %   You may obtain a copy of the License at
@@ -19,13 +19,12 @@ function param=load_F2014_parameters(genotype,set)
 %   See the License for the specific language governing permissions and
 %   limitations under the License.
 
-% Mutant variations:
-% possible_mutants = {'cca1 lhy','cca1','CCA1OX','elf3','wt'}; % 'YHB' still to be added!
+% The function accepts these mutants: 'cca1 lhy','cca1','CCA1OX','elf3','YHB' and 'wt'('wildtype')
 
 %% Define Parameters
 % Default is set 1
 if (nargin==1)||(set==1)
-	% varying parameters in fitting (set 1 of 8)
+	% varying parameters in fitting (set 1 of 8) from Fogelmark & Troein 2014
 	a3 = 5.314;
 	a4 = 7.175;
 	a5 = 1.96;
@@ -165,7 +164,7 @@ p13 = 0.7;
 p14 = 0.3;
 p15 = 3;
 
-% my additional parameters
+% additional parameters
 n1 = 1;
 yhb = 0;
 

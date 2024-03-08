@@ -1,4 +1,6 @@
 function dydt = PIF_CO_FT_dynamics(t,y,P,u,c)
+% Code edited by Rea L Antoniou-Kourounioti (University of Glasgow) as indicated
+%%
 % y(1) PIF4m
 % y(2) PIF5m
 % y(3) PIF

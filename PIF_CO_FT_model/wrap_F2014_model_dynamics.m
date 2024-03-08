@@ -1,5 +1,6 @@
 function u = wrap_F2014_model_dynamics(T,Y,P)
-%
+% Code edited by Rea L Antoniou-Kourounioti (University of Glasgow) as indicated
+%%
 %   Copyright 2018 Yin Hoon Chew, Daniel Seaton, Andrew Millar, and The University of Edinburgh
 %
 %   Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,8 +26,8 @@ end
 
 %% Code edited to reflect new model beyond this point
 % Code:
-%   Copyright 2023 Rea L Antoniou-Kourounioti, and The University of Glasgow
-%%%%%%%%%%% Decide on Licence and update copyright and licence accordingly
+%   Copyright 2024 Rea L Antoniou-Kourounioti and The University of Glasgow
+%
 %   Licensed under the Apache License, Version 2.0 (the "License");
 %   you may not use this file except in compliance with the License.
 %   You may obtain a copy of the License at

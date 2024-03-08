@@ -1,6 +1,8 @@
 function [output,sim_data] = simulate_FM_simp(hour,T,sunrise,sunset,clock_parameters,clock_dynamics,clock_dynamics_model_i,p,run_phenology_model,options)
-% Code significantly edited to simplify and remove modules not used in this
-% version and to include both circadian models. Otherwise based on below:
+% Code significantly edited by Rea L Antoniou-Kourounioti (University of
+% Glasgow) to simplify and remove modules not used in this version, to add
+% new outputs, and to include both circadian models. 
+% Otherwise based on below: 
 %% simulate the Framework Model v2. This function is the core function,
 %
 % Input:
@@ -56,7 +58,7 @@ end
 day_idx = 1;
 has_flowered = false;
 CumPhenThrm=0;
-CumPhenThrmAll=zeros(90,1); % Code edited here to keep track of CumPhenThrm
+CumPhenThrmAll=zeros(90,1);
 
 while day_idx <= N_max_days && ~(has_flowered)
     %initial timepoint
@@ -75,7 +77,7 @@ while day_idx <= N_max_days && ~(has_flowered)
     end
     CumPhenThrm = DayPhenThrm+CumPhenThrm;
     has_flowered = flowering_threshold_test(CumPhenThrm,flowering_thresh_geno,p);
-    CumPhenThrmAll(day_idx)=CumPhenThrm; % Code edited here to keep track of CumPhenThrm
+    CumPhenThrmAll(day_idx)=CumPhenThrm; % Keep record of CumPhenThrm over time
 
     %Update day index
     day_idx = day_idx+1;
@@ -90,7 +92,7 @@ output = [];
 try
     %Try to instantiate a complete output as far as possible
     sim_data.metadata.hour = hour;
-    sim_data.metadata.T = T; % Code edited to add Temperature as output
+    sim_data.metadata.T = T;
     sim_data.metadata.sunrise = sunrise;
     sim_data.metadata.sunset = sunset;
     sim_data.metadata.Photoperiod = sunset - sunrise;
@@ -98,14 +100,12 @@ try
     sim_data.metadata.p = p;
     sim_data.metadata.run_phenology_model = run_phenology_model;
     
-	%% Code edited here to add new outputs and remove unused outputs
 	sim_data.clock_output = clock_output;
 	sim_data.PIF_output = PIF_output;
 	sim_data.Fl = day_idx - 1;
 	sim_data.Hyp = PIF_output.Hyp_length;
     sim_data.CumPhenThrm = CumPhenThrmAll;
     output = [sim_data.clock,sim_data.PIF,sim_data.Hyp,sim_data.Fl];
-	%% Code edit ends here
 catch
     %Do nothing
 end

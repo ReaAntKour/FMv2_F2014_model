@@ -1,17 +1,9 @@
-# frameworkmodel
+# FMv2+F2014
+This repository is associated with the publication Battle et al, 2024.
 
-This repository contains code to simulate the Arabidopsis Framework model v2, described in Chew et al, 2017 [https://doi.org/10.1101/105437].
+It contains code to simulate the Arabidopsis Framework model v2, described in Chew et al, 2017 [https://doi.org/10.1101/105437], modified to include a new circadian clock module, described in Fogelmark K & Troein C (2014) [doi:10.1371/journal.pcbi.1003705], and to simulate a new mutant, YHB, as described in Battle et al, 2024.
 
-The function "simulate_FM.m" runs the model.
-It is called in the script "run_model_simulation", which also sets up model parameters.
-
-The Web Application used the run_simulation.m version to run the model. This allows
-period environment data to be used.
-
-
-## Overview of module/function heirarchy
-
-![My image](img/framework_model_code_schematic.png)
+The scripts "Clock_Comparison_between_models.m" and "Hyp_Fl_comparison_for_two_clock_models.m" (MATLAB R2022a) run the model and produce plots and output files containing the simulation result.
 
 
 ## License

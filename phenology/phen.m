@@ -1,4 +1,5 @@
 function [DayPhenThrm,FT_module_state,PIF_output] = phen(T,t,sunrise,sunset,geno,clock_dynamics_model_i,clock_output,FT_module_state,p,flowering_genotype,hypocotyl_parameters) % Code edited here to add option of multiple models, flowring_genotype, hypocotyl_parameters and output gene levels
+% Code edited by Rea L Antoniou-Kourounioti (University of Glasgow) as indicated
 %% phenology model to determine flowering time
 % Inputs:
 %   T - Temperature (celcius)

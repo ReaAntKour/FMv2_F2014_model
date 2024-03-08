@@ -1,12 +1,12 @@
-function out=F2014_dynamics(t,y,param,sunrise,sunset)
-% F2014 clock model dynamics
+function out=F2014_dynamics_Red(t,y,param,sunrise,sunset)
+% F2014 clock model dynamics with the global variant for the YHB mutant
 
 % Model
 % Fogelmark K, Troein C (2014) Rethinking Transcriptional Activation in the Arabidopsis Circadian Clock. PLoS Comput Biol 10(7): e1003705. doi:10.1371/journal.pcbi.1003705
 
 % Code:
-%   Copyright 2023 Rea L Antoniou-Kourounioti, and The University of Glasgow
-%%%%%%%%%%% Decide on Licence and update copyright and licence accordingly
+%   Copyright 2024 Rea L Antoniou-Kourounioti and The University of Glasgow
+%
 %   Licensed under the Apache License, Version 2.0 (the "License");
 %   you may not use this file except in compliance with the License.
 %   You may obtain a copy of the License at
