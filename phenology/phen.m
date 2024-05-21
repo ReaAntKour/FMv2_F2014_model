@@ -1,4 +1,4 @@
-function [DayPhenThrm,FT_module_state,PIF_output] = phen(T,t,sunrise,sunset,geno,clock_dynamics_model_i,clock_output,FT_module_state,p,flowering_genotype,hypocotyl_parameters) % Code edited here to add option of multiple models, flowring_genotype, hypocotyl_parameters and output gene levels
+function [DayPhenThrm,FT_module_state,PIF_output] = phen(T,t,sunrise,sunset,geno,clock_dynamics_model_i,clock_output,FT_module_state,p,options) % Code edited here to add option of multiple models, flowring_genotype, hypocotyl_parameters and output gene levels
 % Code edited by Rea L Antoniou-Kourounioti (University of Glasgow) as indicated
 %% phenology model to determine flowering time
 % Inputs:
@@ -78,7 +78,7 @@ Phot_n = 3;
 %__________________
 Thrm = zeros(24,1);
 
-[dailyFTarea,FT_module_state,PIF_output] = simulate_PIF_CO_FT_model(sunrise,sunset,clock_output,clock_dynamics_model_i,FT_module_state,T,flowering_genotype,hypocotyl_parameters); % Code edited here to add option of multiple models, temperature, flowering_genotype, hypocotyl_parameters and output gene levels
+[dailyFTarea,FT_module_state,PIF_output] = simulate_PIF_CO_FT_model(sunrise,sunset,clock_output,clock_dynamics_model_i,FT_module_state,T,options); % Code edited here to add option of multiple models, temperature, flowering_genotype, hypocotyl_parameters and output gene levels
 
 hour = 1:24;
 

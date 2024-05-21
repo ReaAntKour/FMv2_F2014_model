@@ -44,6 +44,7 @@ Models = {'P2011_Red', 'P2011_COP1', 'F2014_Red', 'F2014_COP1'};
 
 % set the parameter set for F2014 model
 paramSet=1;
+YHB=3; % 0.5 (33%), 1 (50%), 3 (75%), 9 (90%) or 999999(99.9999%)
 
 % set the common conditions in this case
 options = struct();
@@ -69,12 +70,12 @@ for phot_i=1:length(Phot_All)
 	for ig=1:nG
 		% set the genotype
 		options.genotype = mutant_genotypes{ig};
-		figure('Name',string(join([options.genotype,{Phot_name}])))
+% 		figure('Name',string(join([options.genotype,{Phot_name}])))
 		for clock_dynamics_model_i=1:length(Models)
 			%% Clock model
 			if clock_dynamics_model_i<3
 				clock_species_colNames = {'LHYm','P','GIZ','GIE','LHYp','TOCm','PRR9p','PRR5m','PRR5p','GIp','TOCp','ZTL','EC','GIm','PRR9m','PRR7m','PRR7p','ELF4m','ELF4p','LHYpm','HY5','HFR1','ELF3m','ELF3pc','ELF3pn','COP1pnn','COP1pnd','LUXm','LUXp','COP1pc'};
-				parameters = load_P2011_parameters(options.genotype);
+				parameters = load_P2011_parameters(options.genotype,YHB);
 				if clock_dynamics_model_i==1
 					clock_dynamics = @P2011_dynamics_Red;
 				elseif clock_dynamics_model_i==2
@@ -85,7 +86,7 @@ for phot_i=1:length(Phot_All)
 				clock_Sidx = clock_Sidx1;
 			else
 				clock_species_colNames = {'LHYm','LHYp','CCA1m','CCA1p','P','PRR9m','PRR9p','PRR7m','PRR7p','PRR5m','PRR5c','PRR5n','TOC1m','TOC1n','TOC1c','ELF4m','ELF4p','ELF4d','ELF3m','ELF3p','ELF34','LUXm','LUXp','COP1c','COP1n','COP1d','ZTL','ZG','GIm','GIc','GIn','NOXm','NOXp','RVE8m','RVE8p'};
-				parameters = load_F2014_parameters(options.genotype,paramSet);
+				parameters = load_F2014_parameters(options.genotype,paramSet,YHB);
 				if clock_dynamics_model_i==3
 					clock_dynamics = @F2014_dynamics_Red;
 				elseif clock_dynamics_model_i==4
@@ -98,7 +99,7 @@ for phot_i=1:length(Phot_All)
 	
 			[u,Tc,Yc]=entrain_and_run_clock_model(parameters,clock_dynamics,clock_dynamics_wrapper,c,options,y0);
 	
-			make_and_format_plots(Tc,Yc,clock_dynamics_model_i,options,clock_species_names,clock_nS,clock_Sidx,clock_ylimit_T)
+% 			make_and_format_plots(Tc,Yc,clock_dynamics_model_i,options,clock_species_names,clock_nS,clock_Sidx,clock_ylimit_T)
 
 			Model_output_to_file.(Models{clock_dynamics_model_i})(ig).Time = Tc;
 			for ic=1:length(clock_species_colNames)
@@ -126,7 +127,7 @@ for phot_i=1:length(Phot_All)
 				options.genotype = mutant_genotypes{ig};
 				ModelHypFlMut.(string(join(options.genotype,''))) = Model_output_to_file.(Models{clock_dynamics_model_i})(ig).(clock_species_colNames{ic});
 			end
-			writetable(ModelHypFlMut,['ModelClockMut_phot',Phot_name,'_',Models{clock_dynamics_model_i},'.xlsx'],'Sheet',clock_species_colNames{ic})
+			writetable(ModelHypFlMut,['ModelClockMut_PRR9_P_phot',Phot_name,'_',Models{clock_dynamics_model_i},'.xlsx'],'Sheet',clock_species_colNames{ic})
 		end
 	end
 end

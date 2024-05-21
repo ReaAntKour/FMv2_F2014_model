@@ -71,7 +71,7 @@ while day_idx <= N_max_days && ~(has_flowered)
     
     %run phenology model
     if run_phenology_model
-	    [DayPhenThrm,FT_module_state,PIF_output] = phen(T,t,sunrise(t),sunset(t),flowering_thresh_geno,clock_dynamics_model_i,clock_output,FT_module_state,p,options.genotype,options.hypocotyl_parameters);
+	    [DayPhenThrm,FT_module_state,PIF_output] = phen(T,t,sunrise(t),sunset(t),flowering_thresh_geno,clock_dynamics_model_i,clock_output,FT_module_state,p,options);
     else
         DayPhenThrm = 0;
     end

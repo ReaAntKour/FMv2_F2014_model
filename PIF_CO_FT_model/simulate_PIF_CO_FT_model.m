@@ -1,4 +1,4 @@
-function [dailyFTarea,FT_module_state,PIF_output] = simulate_PIF_CO_FT_model(sunrise, sunset, clock_output, clock_dynamics_model_i, FT_module_state, temperature, flowering_genotype, hp) % Code edited here to add new inputs and outputs
+function [dailyFTarea,FT_module_state,PIF_output] = simulate_PIF_CO_FT_model(sunrise, sunset, clock_output, clock_dynamics_model_i, FT_module_state, temperature, options) % Code edited here to add new inputs and outputs
 % Code edited from original code to simulate the Arabidopsis Framework
 % model v2, described in Chew et al, 2017 [https://doi.org/10.1101/105437]. 
 % Copyright 2018 Yin Hoon Chew, Daniel Seaton, Andrew Millar, and The University of Edinburgh
@@ -20,14 +20,19 @@ c.photoperiod = sunset-sunrise;
 % addpath('P2011_model')
 % addpath('PIF_CO_FT_model')
 
-
 %% Code edited here to allow different circadian model versions to be used as input
+% extract parameters from options
+flowering_genotype = options.genotype;
+hp = options.hypocotyl_parameters;
+paramSet = options.paramSet;
+YHB = options.YHB; % 0.5 (33%)Y, 1 (50%), 3 (75%)Y or 9 (90%)
+
 % Convert clock dynamics into input struct for PIF_CO_FT model
 if clock_dynamics_model_i<3
-	clock_parameters = load_P2011_parameters(flowering_genotype);
+	clock_parameters = load_P2011_parameters(flowering_genotype,YHB);
 	u = wrap_P2011_model_dynamics(clock_output.T,clock_output.Y,clock_parameters);
 else
-	clock_parameters = load_F2014_parameters(flowering_genotype);
+	clock_parameters = load_F2014_parameters(flowering_genotype,paramSet,YHB);
 	u = wrap_F2014_model_dynamics(clock_output.T,clock_output.Y,clock_parameters);
 end
 %% Code edit ends here

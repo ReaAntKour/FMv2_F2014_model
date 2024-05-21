@@ -20,7 +20,7 @@
 % 
 % 
 
-clear
+function Hyp_Fl_comparison_for_two_clock_models(YHB) % clear % 
 run_phenology_model=1;
 
 % Include model folders in path
@@ -32,7 +32,7 @@ addpath('phenology')
 %% input envirnmental conditions
 temp = 22;
 rise = 0;
-load('weather.mat')
+load('weather.mat','weather')
 hour=weather(:,1);
 T=temp*weather(:,2);
 sunrise=rise*weather(:,3);
@@ -40,9 +40,9 @@ options=struct();
 options.entrain = 12; % entrain model at 12/12
 
 % load parameters other than clock and PIF parameters
-load('parameter.mat')
+load('parameter.mat','parameter')
 p=parameter;
-load('Flowering_parameter_F2014')
+load('Flowering_parameter_F2014','paramFl')
 p(17) = paramFl;% CumPhenThrm flowering threshold for Col-0 is p(17)
 
 % Define Hypocotyl parameters
@@ -56,6 +56,10 @@ nG=length(mutant_genotypes);
 % Name the models to run
 Models = {'P2011_Red', 'P2011_COP1', 'F2014_Red', 'F2014_COP1'};
 
+% set the parameter set for F2014 model
+options.paramSet=1;
+options.YHB=YHB; % 0.5 (33%)Y, 1 (50%), 3 (75%)Y, 9 (90%)Y or 999999 (99.9999%)
+
 % set photoperiods to run
 Phot=0:1:20;
 nPh=length(Phot);
@@ -68,30 +72,30 @@ for ig=1:nG
 	% set the genotype
 	options.genotype = mutant_genotypes{ig};
 	Model_output_to_file.(string(join(options.genotype,'')))=struct();
-	figure('Name',string(join(options.genotype)))
+% 	figure('Name',string(join(options.genotype)))
 	for clock_dynamics_model_i=1:length(Models)
 		% set the clock model
 		if clock_dynamics_model_i<3
-			clock_parameters = load_P2011_parameters(options.genotype);
+			clock_parameters = load_P2011_parameters(options.genotype,options.YHB);
 			if clock_dynamics_model_i==1
 				clock_dynamics = @P2011_dynamics_Red;
 			elseif clock_dynamics_model_i==2
 				clock_dynamics = @P2011_dynamics_COP1;
 			end
 			options.y0=[1.0151 0.956 0.0755 0.0041 0.506 0.0977 0.0238 0.0731 0.0697 0.0196 0.0435 0.2505 0.0709 0.1017 0.0658 0.4016 0.1167 0.1012 0.207 0.0788 0.3102 0.0553 0.2991 0.1503 0.0286 0.65 0.2566 0.1012 0.576 0.3269];
-			load('Hypocotyl_parameters_P2011')
+			load('Hypocotyl_parameters_P2011','paramHy')
 			options.hypocotyl_parameters.a1 = paramHy(1);
 			options.hypocotyl_parameters.a2 = paramHy(2);
 			options.hypocotyl_parameters.a3 = paramHy(3);
 		else
-			clock_parameters = load_F2014_parameters(options.genotype);
+			clock_parameters = load_F2014_parameters(options.genotype,options.paramSet,options.YHB);
 			if clock_dynamics_model_i==3
 				clock_dynamics = @F2014_dynamics_Red;
 			elseif clock_dynamics_model_i==4
 				clock_dynamics = @F2014_dynamics_COP1;
 			end
 			options.y0=0.1*ones(1,35);
-			load('Hypocotyl_parameters_F2014')
+			load('Hypocotyl_parameters_F2014','paramHy')
 			options.hypocotyl_parameters.a1 = paramHy(1);
 			options.hypocotyl_parameters.a2 = paramHy(2);
 			options.hypocotyl_parameters.a3 = paramHy(3);
@@ -115,7 +119,7 @@ for ig=1:nG
 		Hypocotyl_length_model = Hyp_length(ig,:,clock_dynamics_model_i)';
 		Days_to_flower_model = Days_to_flower(ig,:,clock_dynamics_model_i)';
 		Model_output_to_file.(string(join(options.genotype,''))).(Models{clock_dynamics_model_i}) = table(photoperiod,Hypocotyl_length_model,Days_to_flower_model);
-		make_and_format_plots(Phot,Hyp_length(ig,:,:),FT_area(ig,:,:),Days_to_flower(ig,:,:),Models,clock_dynamics_model_i)
+% 		make_and_format_plots(Phot,Hyp_length(ig,:,:),FT_area(ig,:,:),Days_to_flower(ig,:,:),Models,clock_dynamics_model_i)
 	end
 end
 
@@ -132,13 +136,14 @@ for clock_dynamics_model_i=1:length(Models)
 		ModelHypFlMut.(string(join([{'HypocotylLength'},join(options.genotype,'')],'_'))) = Model_output_to_file.(string(join(options.genotype,''))).(Models{clock_dynamics_model_i}).Hypocotyl_length_model;
 		ModelHypFlMut.(string(join([{'DaysToFlower'},join(options.genotype,'')],'_'))) = Model_output_to_file.(string(join(options.genotype,''))).(Models{clock_dynamics_model_i}).Days_to_flower_model;
 	end
-	writetable(ModelHypFlMut,['ModelHypFlMut_',Models{clock_dynamics_model_i},'.csv'])
+	writetable(ModelHypFlMut,['output\',int2str(floor(100*YHB/(YHB+1))),'\ModelHypFlMut_',Models{clock_dynamics_model_i},'.csv'])
 end
 
 rmpath('PIF_CO_FT_model')
 rmpath('circadian_module')
 rmpath('parameters')
 rmpath('phenology')
+end
 
 function make_and_format_plots(Phot,Hyp_length,FT_area,Days_to_flower,Models,clock_dynamics_model_i)
 	% Plot Flowering time and Hypocotyl length for different photoperiods

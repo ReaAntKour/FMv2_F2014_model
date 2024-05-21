@@ -1,4 +1,5 @@
-function param=load_F2014_parameters(genotype,set)
+function param=load_F2014_parameters(genotype,set,YHB)
+YHB
 % F2014 clock model parameters
 
 % Model
@@ -184,7 +185,7 @@ for i = 1:length(genotype)
     elseif strcmp(genotype{i},'elf3')
         p16 = 0; % no ELF3 protein production. (mRNA is not directly affected)
     elseif strcmp(genotype{i},'YHB')
-        yhb = 3; % 0.5, 1 or 3
+        yhb = YHB; % 0.5 (33%), 1 (50%), 3 (75%) or 9 (90%)
 	elseif strcmp(genotype{i},'wt')
 		% Do nothing
 	elseif strcmp(genotype{i},'wildtype')
