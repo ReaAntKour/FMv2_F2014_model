@@ -127,7 +127,7 @@ for phot_i=1:length(Phot_All)
 				options.genotype = mutant_genotypes{ig};
 				ModelHypFlMut.(string(join(options.genotype,''))) = Model_output_to_file.(Models{clock_dynamics_model_i})(ig).(clock_species_colNames{ic});
 			end
-			writetable(ModelHypFlMut,['ModelClockMut_PRR9_P_phot',Phot_name,'_',Models{clock_dynamics_model_i},'.xlsx'],'Sheet',clock_species_colNames{ic})
+			writetable(ModelHypFlMut,['output\',int2str(floor(100*YHB/(YHB+1))),'\ModelClockMut_phot',Phot_name,'_',Models{clock_dynamics_model_i},'.xlsx'],'Sheet',clock_species_colNames{ic})
 		end
 	end
 end
