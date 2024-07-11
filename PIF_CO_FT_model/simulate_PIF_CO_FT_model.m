@@ -25,7 +25,7 @@ c.photoperiod = sunset-sunrise;
 flowering_genotype = options.genotype;
 hp = options.hypocotyl_parameters;
 paramSet = options.paramSet;
-YHB = options.YHB; % 0.5 (33%)Y, 1 (50%), 3 (75%)Y or 9 (90%)
+YHB = options.YHB;
 
 % Convert clock dynamics into input struct for PIF_CO_FT model
 if clock_dynamics_model_i<3

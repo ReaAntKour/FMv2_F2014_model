@@ -1,5 +1,4 @@
 function P = load_P2011_parameters(genotype,YHB)
-YHB
 % Code edited by Rea L Antoniou-Kourounioti (University of Glasgow) as indicated
 %% returns a vector of parameter values for a given genotype (e.g. {"prr7","prr9"} is the prr9prr7 knockout)
 % 
@@ -192,7 +191,7 @@ end
 %% Code edited here to add YHB mutant
 if ismember('YHB',genotype)
     %YHB:
-    yhb = YHB; % 0.5 (33%), 1 (50%), 3 (75%) or 9 (90%)
+    yhb = YHB;
 end
 %% Code edit ends here
 
